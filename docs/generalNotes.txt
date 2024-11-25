@@ -1,0 +1,154 @@
+1 - Browsers doesn't understand SASS stying, it only understands the regular CSS styling. So we can use parcel to transpile the SASS/SCSS to regular css to apply our styling on the website.
+
+--------------------------------------------------------------------
+
+2 - You can install parcel by running this command: "npm i parcel -D"
+
+--------------------------------------------------------------------
+
+3 - If you are using Parcel v2, replace defer with type="module" in the script tag at the index.html, and also completely remove the "main" property from the package.json after initializing the npm (npm init)
+
+--------------------------------------------------------------------
+
+4 - hashChange Event: The hashchange event is triggered when the fragment identifier of the URL (the part after the # symbol) changes. This event can be used to detect changes in the URL hash and perform actions based on the new hash value. In our case, we will change the displayed recipe based on the hashChange. Please note that the value after the # is the recipe.id
+
+--------------------------------------------------------------------
+
+5 - In this project, I will be using the MVC (Model, View, Controller) Architecture to accomplish Modularity, Maintainability, and Expandability.
+
+--------------------------------------------------------------------
+
+6 - Components of Any Architecture:
+    (i) Business Logic:
+        Code that solves the actual business problem.
+        Directly related to what the business does and what it needs.
+        Example: Sending messages, storing transactions, calculating taxes, etc.
+
+    (ii) State:
+        Essentially stores all the data about the application.
+        Should be the single source of truth.
+        The UI should be kept in sync with the state.
+        State libraries exist to handle this.
+
+    (iii) HTTP Library:
+        Responsible for making and receiving AJAX requests.
+        Optional, but almost always necessary in real-world applications.
+
+    (iv) Application Logic (Router):
+        Code that is only concerned about the implementation of the application itself.
+        Handles navigation and UI events.
+
+    (v) Presentation Logic (UI Layer):
+        Code concerned with the visible part of the application.
+        Essentially displays the application state.
+
+--------------------------------------------------------------------
+
+7 - The Model-View-Controller (MVC) Architecture:
+    (i) Model:
+        * Purpose: Handles the business logic and state of the application.
+        * Responsibilities:
+        Stores and manages all the application data (e.g., user inputs, fetched data from APIs).
+        Handles updates to the data and communicates them to the controller.
+        * Example:
+        The Model stores the list of items in the cart, their prices, and quantities.
+        When a user adds an item, the Model updates the list and calculates the total price.
+
+    (ii) View:
+        * Purpose: Manages the presentation logic and displays the application state to the user.
+        * Responsibilities:
+        Responsible for rendering the UI elements (e.g., buttons, forms, lists).
+        Updates itself when notified by the Model or Controller.
+        * Example:
+        The View displays the list of items in the cart along with the total price.
+        When the cart updates, the View reflects the changes (e.g., showing a new item or updated total price).
+
+    (iii) Controller:
+        * Purpose: Acts as the bridge between the Model and the View.
+        * Responsibilities:
+        Listens for user interactions (e.g., button clicks, form submissions).
+        Processes user inputs and updates the Model or View accordingly.
+        * Example:
+        When a user clicks the "Add to Cart" button, the Controller tells the Model to update the cart data.
+        It also instructs the View to refresh the cart UI.
+
+--------------------------------------------------------------------
+
+8 - How MVC Works Together
+The 'Controller' takes user input, like adding an item to the cart.
+The 'Model' updates the cart data based on the Controller’s instructions.
+The 'View' listens to changes in the Model and updates the UI accordingly.
+The 'Model' and the 'View' are completely standalone and isolated components, they don't import from the 'Controller'. In fact, they don't even know that the controller even exists. The model and the view just gets instructions from the controller and applies them.
+
+--------------------------------------------------------------------
+
+9 - Simple Real-World Example (MVC in Action)
+    Imagine a Shopping Cart Application:
+    (i) Model:
+        Stores the cart data (list of items, their prices, quantities, and total cost).
+        Handles API requests to fetch product details or save the cart data to a database.
+
+    (ii) View:
+        Displays the cart contents to the user, such as product names, quantities, and total price.
+        Updates the UI when a new item is added, quantities are changed, or an item is removed.
+
+    (iii) Controller:
+        Listens for user actions, such as clicking the "Add to Cart" button, increasing item quantity, or removing an item.
+        Tells the Model to update the cart data based on user inputs.
+        Updates the View to reflect changes, such as showing the updated total cost or removing an item visually.
+
+--------------------------------------------------------------------
+
+10 - Usage of config.js file
+This file contains all of the constants and frequently used variables in our project, which allows us to easily configure the project configuration data (like API Keys, API URLs, etc) to be manipulated in a single place. The only variables that we do want here are the ones that are responsible for defining important data about the Application itself.
+
+--------------------------------------------------------------------
+
+11 - Usage of helpers.js file
+This file contains all of the helper functions that we reuse over and over in our project, so we have a central place of all of these helper functions (like a function that retrieves a JSON from an API).
+
+--------------------------------------------------------------------
+
+12 - Listening to Event Handlers in MVC Architecture (Publisher-Subscriber Design Pattern)
+We have two issues to address:
+    (i) Events should be handled in the controller (otherwise we would habe application logic in the view)
+        The Controller is responsible for application logic, so all event handling should be delegated to it.
+        This ensures the View only focuses on presenting data, without becoming bloated with business or application logic.
+
+    (ii) Events should be listened for in the view (otherwise we would need DOM elements in the controller)
+        The View interacts directly with the DOM, so it should listen for user interactions.
+        This avoids introducing DOM elements into the Controller, ensuring separation of concerns.
+
+How This Works in the MVC Architecture:
+    (i) The View Listens for Events
+        The View is responsible for attaching event listeners to DOM elements (e.g., buttons, inputs).
+        It listens for user interactions and emits events to notify the Controller.
+
+    (ii) The Controller Handles Events
+        The Controller subscribes to the events emitted by the View.
+        When notified, it executes the necessary logic and updates the Model or the View.
+
+In other words: View is the 'Publisher', which knows when to react to particular event. And the Controller is the 'Subscriber', which wants to react to particular event.
+Therefore, the solution to these two issues is that we can Subscribe to the Publisher by passing in the subscriber function as an argument (callback function of the Publisher).
+
+--------------------------------------------------------------------
+
+13 - Why This Publisher-Subscriber Design Pattern Works
+    (i) Events in the View:
+        The View listens for user interactions because it has direct access to the DOM.
+
+    (ii) Logic in the Controller:
+        The Controller processes the events to ensure business and application logic is centralized.
+
+    (iii) State in the Model:
+        The Model maintains a clean, central store of application data.
+
+    (iv) UI Updates in the View:
+        The View reflects state changes from the Model, ensuring a responsive UI.
+
+--------------------------------------------------------------------
+
+14 - Deploying the Application
+    (i) Delete dist and .parcel-cache folders in your directory
+    (ii) Run "npm build"
+    (iii) Deploy the application on netlify, note, we cannot deploy Databases on netlify.
