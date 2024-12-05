@@ -1,7 +1,7 @@
 // This pagenationView class will be used to display the pagination buttons in the sidebar
 
 import View from './View.js';
-import icons from 'url:../../img/icons.svg';
+import icons from 'url:../../../assets/icons.svg';
 
 class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');

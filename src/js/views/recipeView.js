@@ -1,7 +1,7 @@
 // This is the View Class for loading the Recipe
 
 import View from './View.js';
-import icons from 'url:../../img/icons.svg';
+import icons from 'url:../../../assets/icons.svg';
 import fracty from 'fracty';
 
 class RecipeView extends View {

@@ -1,7 +1,7 @@
 // This View will be the like the Parent (Base) Class of both ResultsView and BookmarksView in rendering their markup, because they both have the same markUp. So this class will generate only one Preview element in the _generateMarkupPreview() method
 
 import View from './View.js';
-import icons from 'url:../../img/icons.svg';
+import icons from 'url:../../../assets/icons.svg';
 
 class PreviewView extends View {
   _parentElement = '';
